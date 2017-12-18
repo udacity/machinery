@@ -33,6 +33,7 @@ func (b *MongodbBackend) InitGroup(groupUUID string, taskUUIDs []string) error {
 	groupMeta := &tasks.GroupMeta{
 		GroupUUID: groupUUID,
 		TaskUUIDs: taskUUIDs,
+		CreatedAt: time.Now().UTC(),
 	}
 	return b.groupMetasCollection.Insert(groupMeta)
 }
@@ -104,7 +105,7 @@ func (b *MongodbBackend) TriggerChord(groupUUID string) (bool, error) {
 
 // SetStatePending updates task state to PENDING
 func (b *MongodbBackend) SetStatePending(signature *tasks.Signature) error {
-	update := bson.M{"state": tasks.StatePending}
+	update := bson.M{"state": tasks.StatePending, "created_at": time.Now().UTC()}
 	return b.updateState(signature, update)
 }
 
