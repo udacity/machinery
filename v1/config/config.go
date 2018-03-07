@@ -69,6 +69,12 @@ type SQSConfig struct {
 	WaitTimeSeconds int `yaml:"receive_wait_time_seconds" envconfig:"SQS_WAIT_TIME_SECONDS"`
 }
 
+// DynamoDBConfig wraps DynamoDB related configuration
+type DynamoDBConfig struct {
+	TaskStatesTable string `yaml:"task_states_table" envconfig:"Task_States_Table"`
+	GroupMetasTable string `yaml:"group_metas_table" envconfig:"Group_Metas_Table"`
+}
+
 // Decode from yaml to map (any field whose type or pointer-to-type implements
 // envconfig.Decoder can control its own deserialization)
 func (args *QueueBindingArgs) Decode(value string) error {
